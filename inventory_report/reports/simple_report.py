@@ -4,6 +4,10 @@ from collections import Counter
 
 class SimpleReport:
     @classmethod
+    def counter_products(cls, report):
+        return Counter([item["nome_da_empresa"] for item in report])
+
+    @classmethod
     def generate(cls, report):
         today = date.today()
         manufacturing_dates = [item["data_de_fabricacao"] for item in report]
@@ -12,7 +16,7 @@ class SimpleReport:
             for item in report
             if item["data_de_validade"] > str(today)
         ]
-        all_companies = Counter([item["nome_da_empresa"] for item in report])
+        all_companies = cls.counter_products(report)
 
         return (
             f"Data de fabricação mais antiga: {min(manufacturing_dates)}\n"
